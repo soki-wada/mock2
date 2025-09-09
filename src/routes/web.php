@@ -24,3 +24,6 @@ Route::get('/admin/login', [UserController::class, 'showAdminLogin']);
         Route::get('/email/verify', [UserController::class, 'emailAuth'])->name('verification.notice');
         Route::get('/email/verify/{id}/{hash}', [UserController::class, 'verify'])->middleware(['auth', 'signed'])->name('verification.verify');
         Route::post('/email/verification-notification', [UserController::class, 'resend'])->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+        Route::get('attendance/list', [UserController::class, 'showList']);
+        Route::get('attendance/detail/{id}', [UserController::class, 'showDetail']);
+        Route::post('attendance/detail/{id}', [UserController::class, 'modificationRequest']);

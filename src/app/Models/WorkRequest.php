@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Request extends Model
+class WorkRequest extends Model
 {
     use HasFactory;
 
@@ -17,11 +17,13 @@ class Request extends Model
         'notes'
     ];
 
-    public function attendance(){
+    public function attendance()
+    {
         return $this->belongsTo(Attendance::class);
     }
 
-    public function requestBreaks(){
+    public function requestBreaks()
+    {
         return $this->hasMany(RequestBreak::class);
     }
 }

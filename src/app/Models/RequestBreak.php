@@ -10,12 +10,12 @@ class RequestBreak extends Model
     use HasFactory;
 
     protected $fillable = [
-        'request_id',
+        'work_request_id',
         'break_start',
         'break_end',
     ];
 
-    public function request(){
-        return $this->belongsTo(Request::class);
+    public function workRequest(){
+        return $this->belongsTo(WorkRequest::class);
     }
 }
