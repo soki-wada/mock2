@@ -93,9 +93,15 @@ use Carbon\Carbon;
                     @endif
                 </td>
                 <td class="attendance-table-data-item">
-                    <a href="/attendance/detail/{{$workTime->id}}" class="attendance-table-date-item-detail">
-                     詳細
-                    </a>
+                    @if($workTime)
+                        <a href="/attendance/detail/{{$workTime->id}}" class="attendance-table-data-item-detail">
+                            詳細
+                        </a>
+                    @else
+                        <p class="attendance-table-date-item-detail">
+                            詳細
+                        </p>
+                    @endif
                 </td>
             </tr>
             @endforeach

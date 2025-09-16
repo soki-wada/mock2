@@ -27,3 +27,7 @@ Route::get('/admin/login', [UserController::class, 'showAdminLogin']);
         Route::get('attendance/list', [UserController::class, 'showList']);
         Route::get('attendance/detail/{id}', [UserController::class, 'showDetail']);
         Route::post('attendance/detail/{id}', [UserController::class, 'modificationRequest']);
+        Route::get('/stamp_correction_request/list', [UserController::class, 'showRequest']);
+        Route::get('/attendance', [UserController::class, 'showAttendance']);
+        Route::post('/attendance', [UserController::class, 'registerAttendance']);
+        Route::get('/admin/users', [UserController::class, 'showUsers']);

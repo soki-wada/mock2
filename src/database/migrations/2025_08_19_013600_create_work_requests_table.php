@@ -15,6 +15,7 @@ class CreateWorkRequestsTable extends Migration
     {
         Schema::create('work_requests', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('attendance_id')->constrained()->cascadeOnDelete();
             $table->string('status');
             $table->time('clock_in');

@@ -13,22 +13,22 @@
 <body>
     <header class="header">
         <div class="header-inner">
-            <a href="/" class="header-logo-wrapper">
+            <a href="/attendance" class="header-logo-wrapper">
                 <img src="{{asset('images/logo.png')}}" alt="" class="header-logo">
             </a>
             <div class="header-button">
                 <div class="header-button-wrapper">
-                    <a href="/" class="header-button-item">
+                    <a href="/attendance" class="header-button-item">
                         勤怠
                     </a>
                 </div>
                 <div class="header-button-wrapper">
-                    <a href="/" class="header-button-item">
+                    <a href="/attendance/list" class="header-button-item">
                         勤怠一覧
                     </a>
                 </div>
                 <div class="header-button-wrapper">
-                    <a href="/" class="header-button-item">
+                    <a href="/stamp_correction_request/list" class="header-button-item">
                         申請
                     </a>
                 </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Attendance;
+use App\Models\BreakTime;
 use App\Models\RequestBreak;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -154,6 +155,7 @@ class UserController extends Controller
     public function modificationRequest(Request $request, $id){
         $workRequest = WorkRequest::create([
             'attendance_id' => $id,
+            'user_id' => 1,
             'status' => '承認待ち',
             'clock_in' => $request->clock_in,
             'clock_out' => $request->clock_out,
@@ -169,5 +171,95 @@ class UserController extends Controller
         }
 
         return redirect('/attendance/detail/'. $id);
+    }
+
+    public function showRequest(){
+        $tab = request()->query('tab', 'unapproved');
+
+        $unapprovedRequests = WorkRequest::where('user_id', 1)->where('status', '承認待ち')->with('attendance')->get();
+
+        foreach($unapprovedRequests as $unapprovedRequest){
+            $unapprovedRequest->date_formatted = Carbon::parse($unapprovedRequest->created_at)->format('Y/m/d');
+
+            $unapprovedRequest->attendance->date_formatted = Carbon::parse($unapprovedRequest->attendance->date)->format('Y/m/d');
+        }
+
+        $approvedRequests = WorkRequest::where('user_id', 1)->where('status', '承認済み')->with('attendance')->get();
+
+        foreach ($approvedRequests as $approvedRequest) {
+            $approvedRequest->date_formatted = Carbon::parse($approvedRequest->created_at)->format('Y/m/d');
+
+            $approvedRequest->attendance->date_formatted = Carbon::parse($approvedRequest->attendance->date)->format('Y/m/d');
+        }
+
+        $user = User::find(1);
+
+        return view('request', compact('tab', 'unapprovedRequests', 'approvedRequests', 'user'));
+    }
+
+    public function showAttendance(){
+        $date =  now()->format('Y年m月d日'). '('. now()->isoformat('ddd').')';
+        $time = now()->format('H:i');
+
+        $workTime = Attendance::where('user_id', 1)->where('date', 'like', now()->format('Y-m-d') . '%')->with('breakTimes')->first();
+
+        $clock_in = !empty($workTime?->clock_in);
+
+        $clock_out = !empty($workTime?->clock_out);
+
+        $breakTime = $workTime?->breakTimes->last();
+
+        $break_start = !empty($breakTime?->break_start);
+
+        $break_end = !empty($breakTime?->break_end);
+
+        $atWork  = false;
+        $atBreak = false;
+
+        if($break_start && !$break_end){
+            $atBreak = true;
+        }else{
+            $atWork = true;
+        }
+
+        return view('index', compact('date', 'time', 'clock_in', 'clock_out', 'atBreak', 'atWork'));
+    }
+
+    public function registerAttendance(Request $request){
+        $date = now()->format('Y-m-d');
+
+        if($request->clock_in){
+            Attendance::create([
+                'user_id' => 1,
+                'date' => $date,
+                'clock_in' => $request->clock_in
+            ]);
+        }else{
+            $attendance = Attendance::where('user_id', 1)->where('date', 'like', $date . '%')->with('breakTimes')->first();
+
+            if($request->clock_out){
+                Attendance::find($attendance->id)->update([
+                    'clock_out' => $request->clock_out
+                ]);
+            }elseif($request->break_start){
+                BreakTime::create([
+                    'attendance_id' => $attendance->id,
+                    'break_start' => $request->break_start,
+                ]);
+            }elseif($request->break_end){
+                $break = $attendance->breakTimes()->latest('id')->first();
+                BreakTime::find($break->id)->update([
+                    'break_end' => $request->break_end
+                ]);
+            }
+        }
+
+        return redirect('/attendance');
+    }
+
+    public function showUsers(){
+        $users = User::all();
+
+        return view('admin-users-index', compact('users'));
     }
 }

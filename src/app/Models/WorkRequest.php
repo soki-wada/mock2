@@ -10,6 +10,7 @@ class WorkRequest extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'attendance_id',
         'status',
         'clock_in',
