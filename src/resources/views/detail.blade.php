@@ -17,7 +17,7 @@ use Carbon\Carbon;
     <h2 class="detail-title">
         勤怠詳細
     </h2>
-    @if(isset($workRequest))
+    @if(!empty($workRequest))
     <div class="detail-table-wrapper">
         <table class="detail-table">
             <tr class="detail-table-data">

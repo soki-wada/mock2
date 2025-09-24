@@ -71,29 +71,27 @@ use Carbon\Carbon;
                     {{Carbon::parse($date)->format('m/d'). '('. Carbon::parse($date)->isoformat('ddd'). ')'}}
                 </td>
                 <td class="attendance-table-data-item">
-                    @if($workTime)
+                    @if(!empty($workTime))
                     {{$workTime->clock_in_formatted}}
                     @endif
                 </td>
                 <td class="attendance-table-data-item">
-                    @if($workTime)
+                    @if(!empty($workTime->clock_out))
                     {{$workTime->clock_out_formatted}}
                     @endif
                 </td>
                 <td class="attendance-table-data-item">
-                    @if($workTime)
-                    @foreach($workTime->breakTimes as $breakTime)
-                    {{$breakTime->diff}}
-                    @endforeach
+                    @if(!empty($workTime->breakTimes))
+                    {{$workTime->diff}}
                     @endif
                 </td>
                 <td class="attendance-table-data-item">
-                    @if($workTime)
+                    @if(!empty($workTime->clock_out))
                     {{$workTime->sum}}
                     @endif
                 </td>
                 <td class="attendance-table-data-item">
-                    @if($workTime)
+                    @if(!empty($workTime))
                         <a href="/attendance/detail/{{$workTime->id}}" class="attendance-table-data-item-detail">
                             詳細
                         </a>

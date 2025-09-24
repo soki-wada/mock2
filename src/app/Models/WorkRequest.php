@@ -27,4 +27,8 @@ class WorkRequest extends Model
     {
         return $this->hasMany(RequestBreak::class);
     }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }
