@@ -12,6 +12,32 @@ use Carbon\Carbon;
 <link rel="stylesheet" href="{{asset('css/attendance.css')}}">
 @endsection
 
+@section('button')
+<div class="header-button-wrapper">
+    <a href="/attendance" class="header-button-item">
+        勤怠
+    </a>
+</div>
+<div class="header-button-wrapper">
+    <a href="/attendance/list" class="header-button-item">
+        勤怠一覧
+    </a>
+</div>
+<div class="header-button-wrapper">
+    <a href="/stamp_correction_request/list" class="header-button-item">
+        申請
+    </a>
+</div>
+<div class="header-button-wrapper">
+    {{-- @authの予定 --}}
+    <form action="/logout" class="header-form-logout" method="post">
+        @csrf
+        <button class="header-button-item" type="submit">ログアウト</button>
+    </form>
+</div>
+@endsection
+
+
 @section('content')
 <div class="attendance-content">
     <h2 class="attendance-title">
@@ -38,7 +64,7 @@ use Carbon\Carbon;
             <input type="hidden" value="{{$month}}" name="nextMonth">
             <div class="attendance-month-next-button-wrapper">
                 <button class="attendance-month-next-button" type="submit">
-                    → 翌月
+                    翌月 →
                 </button>
             </div>
         </form>
@@ -92,13 +118,13 @@ use Carbon\Carbon;
                 </td>
                 <td class="attendance-table-data-item">
                     @if(!empty($workTime))
-                        <a href="/attendance/detail/{{$workTime->id}}" class="attendance-table-data-item-detail">
-                            詳細
-                        </a>
+                    <a href="/attendance/detail/{{$workTime->id}}" class="attendance-table-data-item detail">
+                        詳細
+                    </a>
                     @else
-                        <p class="attendance-table-date-item-detail">
-                            詳細
-                        </p>
+                    <p class="attendance-table-date-item detail">
+                        詳細
+                    </p>
                     @endif
                 </td>
             </tr>

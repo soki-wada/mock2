@@ -10,39 +10,18 @@
     <title>@yield('title')</title>
 </head>
 
-<body>
+<body class="body">
     <header class="header">
         <div class="header-inner">
-            <a href="/attendance" class="header-logo-wrapper">
+            <a href="" class="header-logo-wrapper">
                 <img src="{{asset('images/logo.png')}}" alt="" class="header-logo">
             </a>
             <div class="header-button">
-                <div class="header-button-wrapper">
-                    <a href="/attendance" class="header-button-item">
-                        勤怠
-                    </a>
-                </div>
-                <div class="header-button-wrapper">
-                    <a href="/attendance/list" class="header-button-item">
-                        勤怠一覧
-                    </a>
-                </div>
-                <div class="header-button-wrapper">
-                    <a href="/stamp_correction_request/list" class="header-button-item">
-                        申請
-                    </a>
-                </div>
-                <div class="header-button-wrapper">
-                    {{-- @authの予定 --}}
-                    <form action="/logout" class="header-form-logout" method="post">
-                        @csrf
-                        <button class="header-button-item" type="submit">ログアウト</button>
-                    </form>
-                </div>
+                @yield('button')
             </div>
         </div>
     </header>
-    <main>
+    <main class="main">
         @yield('content')
     </main>
     @yield('js')

@@ -24,7 +24,7 @@
 }
 
 .header-button{
-    max-width: 550px;
+    max-width: 600px;
     width: 60%;
     display: flex;
     justify-content: space-between;
@@ -37,6 +37,10 @@
     height: 45px;
     line-height: 45px;
     text-align: center;
+}
+
+.long{
+    max-width: 180px;
 }
 
 .header-form-logout{

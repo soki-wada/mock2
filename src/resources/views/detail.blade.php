@@ -12,6 +12,32 @@ use Carbon\Carbon;
 <link rel="stylesheet" href="{{asset('css/detail.css')}}">
 @endsection
 
+@section('button')
+<div class="header-button-wrapper">
+    <a href="/attendance" class="header-button-item">
+        勤怠
+    </a>
+</div>
+<div class="header-button-wrapper">
+    <a href="/attendance/list" class="header-button-item">
+        勤怠一覧
+    </a>
+</div>
+<div class="header-button-wrapper">
+    <a href="/stamp_correction_request/list" class="header-button-item">
+        申請
+    </a>
+</div>
+<div class="header-button-wrapper">
+    {{-- @authの予定 --}}
+    <form action="/logout" class="header-form-logout" method="post">
+        @csrf
+        <button class="header-button-item" type="submit">ログアウト</button>
+    </form>
+</div>
+@endsection
+
+
 @section('content')
 <div class="detail-content">
     <h2 class="detail-title">

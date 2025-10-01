@@ -12,6 +12,32 @@ use Carbon\Carbon;
 <link rel="stylesheet" href="{{asset('css/admin-users-index.css')}}">
 @endsection
 
+@section('button')
+<div class="header-button-wrapper">
+    <a href="/admin/attendances" class="header-button-item">
+        勤怠一覧
+    </a>
+</div>
+<div class="header-button-wrapper long">
+    <a href="/admin/users" class="header-button-item">
+        スタッフ一覧
+    </a>
+</div>
+<div class="header-button-wrapper">
+    <a href="/admin/requests" class="header-button-item">
+        申請一覧
+    </a>
+</div>
+<div class="header-button-wrapper">
+    {{-- @authの予定 --}}
+    <form action="/logout" class="header-form-logout" method="post">
+        @csrf
+        <button class="header-button-item" type="submit">ログアウト</button>
+    </form>
+</div>
+@endsection
+
+
 @section('content')
 <div class="users-content">
     <h2 class="users-title">
@@ -31,15 +57,15 @@ use Carbon\Carbon;
                 </th>
             </tr>
             @foreach($users as $user)
-            <tr class="users-table-row">
-                <td class="users-table-data">
+            <tr class="users-table-data">
+                <td class="users-table-data-item">
                     {{$user->name}}
                 </td>
-                <td class="users-table-data">
+                <td class="users-table-data-item">
                     {{$user->email}}
                 </td>
-                <td class="users-table-data">
-                    <a href="/admin/users/{{$user->id}}/attendances" class="users-table-data-item-detail">
+                <td class="users-table-data-item">
+                    <a href="/admin/users/{{$user->id}}/attendances" class="users-table-data-item detail">
                         詳細
                     </a>
                 </td>

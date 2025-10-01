@@ -12,6 +12,32 @@ use Carbon\Carbon;
 <link rel="stylesheet" href="{{asset('css/admin-request.css')}}">
 @endsection
 
+@section('button')
+<div class="header-button-wrapper">
+    <a href="/admin/attendances" class="header-button-item">
+        勤怠一覧
+    </a>
+</div>
+<div class="header-button-wrapper long">
+    <a href="/admin/users" class="header-button-item">
+        スタッフ一覧
+    </a>
+</div>
+<div class="header-button-wrapper">
+    <a href="/admin/requests" class="header-button-item">
+        申請一覧
+    </a>
+</div>
+<div class="header-button-wrapper">
+    {{-- @authの予定 --}}
+    <form action="/logout" class="header-form-logout" method="post">
+        @csrf
+        <button class="header-button-item" type="submit">ログアウト</button>
+    </form>
+</div>
+@endsection
+
+
 @section('content')
 <div class="request-content">
     <h2 class="request-title">
@@ -48,24 +74,24 @@ use Carbon\Carbon;
                 </th>
             </tr>
             @foreach($unapprovedRequests as $unapprovedRequest)
-            <tr class="request-table-row">
-                <td class="request-table-data">
+            <tr class="request-table-data">
+                <td class="request-table-data-item">
                     {{$unapprovedRequest->status}}
                 </td>
-                <td class="request-table-data">
+                <td class="request-table-data-item">
                     {{$unapprovedRequest->user->name}}
                 </td>
-                <td class="request-table-data">
+                <td class="request-table-data-item">
                     {{$unapprovedRequest->attendance->date_formatted}}
                 </td>
-                <td class="request-table-data">
+                <td class="request-table-data-item">
                     {{$unapprovedRequest->notes}}
                 </td>
-                <td class="request-table-data">
+                <td class="request-table-data-item">
                     {{$unapprovedRequest->date_formatted}}
                 </td>
-                <td class="request-table-data">
-                    <a href="/admin/requests/{{$unapprovedRequest->id}}" class="request-table-data-item-detail">
+                <td class="request-table-data-item">
+                    <a href="/admin/requests/{{$unapprovedRequest->id}}" class="request-table-data-item detail">
                         詳細
                     </a>
                 </td>
@@ -96,24 +122,24 @@ use Carbon\Carbon;
                 </th>
             </tr>
             @foreach($approvedRequests as $approvedRequest)
-            <tr class="request-table-row">
-                <td class="request-table-data">
+            <tr class="request-table-data">
+                <td class="request-table-data-item">
                     {{$approvedRequest->status}}
                 </td>
-                <td class="request-table-data">
+                <td class="request-table-data-item">
                     {{$approvedRequest->user->name}}
                 </td>
-                <td class="request-table-data">
+                <td class="request-table-data-item">
                     {{$approvedRequest->attendance->date_formatted}}
                 </td>
-                <td class="request-table-data">
+                <td class="request-table-data-item">
                     {{$approvedRequest->notes}}
                 </td>
-                <td class="request-table-data">
+                <td class="request-table-data-item">
                     {{$approvedRequest->date_formatted}}
                 </td>
-                <td class="request-table-data">
-                    <a href="/admin/requests/{{$approvedRequest->id}}" class="request-table-data-item-detail">
+                <td class="request-table-data-item">
+                    <a href="/admin/requests/{{$approvedRequest->id}}" class="request-table-data-item detail">
                         詳細
                     </a>
                 </td>

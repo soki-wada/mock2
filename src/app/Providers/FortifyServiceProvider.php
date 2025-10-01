@@ -12,6 +12,11 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Fortify;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+
+
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -47,6 +52,27 @@ class FortifyServiceProvider extends ServiceProvider
         });
         Fortify::loginView(function () {
             return view('auth.login');
+        });
+
+        Fortify::authenticateUsing(function (Request $request) {
+            // 入力されたメールアドレスで管理者を検索
+            $admin = User::where('role', 'admin')->where('email', $request->email)->first();
+
+            // パスワードの一致を確認
+            if (Hash::check($request->password, $admin->password)) {
+                return $admin;
+            } else {
+                return null;
+            }
+        });
+
+        // ログイン後のリダイレクト先の設定
+        Fortify::redirects('login', function () {
+            if (Auth::guard('admin')->check()) {
+                return '/admin/attendances'; // 管理者用ダッシュボードにリダイレクト
+            } else {
+                return '/attendance'; // 一般ユーザー用のホームページにリダイレクト
+            }
         });
 
         RateLimiter::for('login', function (Request $request) {

@@ -1,0 +1,80 @@
+.body {
+    min-height: 100vh;
+    background-color: #f0eff2;
+}
+
+.index-content{
+    width: 60%;
+    margin: 100px auto;
+    text-align: center;
+}
+
+.index-status-wrapper{
+    margin: 0 auto;
+    width: 100px;
+    height: 40px;
+    border-radius: 50px;
+    background-color: #c8c8c8;
+}
+
+.index-status{
+    font-weight: 700;
+    font-size: 18px;
+    color: #696969;
+    line-height: 40px;
+}
+
+.index-time-wrapper{
+    margin: 0 auto;
+}
+
+.index-time-date{
+    font-weight: 400;
+    font-size: 40px;
+    color: #000000;
+}
+
+.index-time-now{
+    margin-top: 0;
+    font-weight: 700;
+    font-size: 80px;
+    color: #000000;
+}
+
+.index-form-wrapper{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.index-form-button-wrapper{
+    width: 180px;
+    height: 70px;
+}
+
+.index-form-button{
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 20px;
+    background-color: #000000;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 32px;
+    cursor: pointer;
+}
+
+.break{
+    margin-left: 50px;
+}
+
+.white{
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.index-form-message{
+    font-weight: 700;
+    font-size: 26px;
+    color: #000000;
+}

@@ -12,6 +12,32 @@ use Carbon\Carbon;
 <link rel="stylesheet" href="{{asset('css/admin-revision-request.css')}}">
 @endsection
 
+@section('button')
+<div class="header-button-wrapper">
+    <a href="/admin/attendances" class="header-button-item">
+        勤怠一覧
+    </a>
+</div>
+<div class="header-button-wrapper long">
+    <a href="/admin/users" class="header-button-item">
+        スタッフ一覧
+    </a>
+</div>
+<div class="header-button-wrapper">
+    <a href="/admin/requests" class="header-button-item">
+        申請一覧
+    </a>
+</div>
+<div class="header-button-wrapper">
+    {{-- @authの予定 --}}
+    <form action="/logout" class="header-form-logout" method="post">
+        @csrf
+        <button class="header-button-item" type="submit">ログアウト</button>
+    </form>
+</div>
+@endsection
+
+
 @section('content')
 <div class="detail-content">
     <h2 class="detail-title">
@@ -96,9 +122,11 @@ use Carbon\Carbon;
         </form>
     </div>
     @else
-    <p class="detail-table-attention">
-        承認済み
-    </p>
+    <div class="detail-table-attention-wrapper">
+        <p class="detail-table-attention">
+            承認済み
+        </p>
+    </div>
     @endif
 </div>
 @endsection

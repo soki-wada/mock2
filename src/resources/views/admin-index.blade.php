@@ -12,6 +12,32 @@ use Carbon\Carbon;
 <link rel="stylesheet" href="{{asset('css/admin-index.css')}}">
 @endsection
 
+@section('button')
+<div class="header-button-wrapper">
+    <a href="/admin/attendances" class="header-button-item">
+        勤怠一覧
+    </a>
+</div>
+<div class="header-button-wrapper long">
+    <a href="/admin/users" class="header-button-item">
+        スタッフ一覧
+    </a>
+</div>
+<div class="header-button-wrapper">
+    <a href="/admin/requests" class="header-button-item">
+        申請一覧
+    </a>
+</div>
+<div class="header-button-wrapper">
+    {{-- @authの予定 --}}
+    <form action="/logout" class="header-form-logout" method="post">
+        @csrf
+        <button class="header-button-item" type="submit">ログアウト</button>
+    </form>
+</div>
+@endsection
+
+
 @section('content')
 <div class="index-content">
     <h2 class="index-title">
@@ -38,7 +64,7 @@ use Carbon\Carbon;
             <input type="hidden" value="{{$date}}" name="nextDay">
             <div class="index-date-next-button-wrapper">
                 <button class="index-date-next-button" type="submit">
-                    → 翌日
+                    翌日 →
                 </button>
             </div>
         </form>
@@ -67,30 +93,30 @@ use Carbon\Carbon;
                 </th>
             </tr>
             @foreach($workTimes as $workTime)
-            <tr class="index-table-row">
-                <td class="index-table-data">
+            <tr class="index-table-data">
+                <td class="index-table-data-item">
                     {{$workTime->user->name}}
                 </td>
-                <td class="index-table-data">
+                <td class="index-table-data-item">
                     {{$workTime->clock_in_formatted}}
                 </td>
-                <td class="index-table-data">
+                <td class="index-table-data-item">
                     @if(!empty($workTime->clock_out))
                     {{$workTime->clock_out_formatted}}
                     @endif
                 </td>
-                <td class="index-table-data">
+                <td class="index-table-data-item">
                     @if(!empty($workTime->breakTimes))
                     {{$workTime->diff}}
                     @endif
                 </td>
-                <td class="index-table-data">
+                <td class="index-table-data-item">
                     @if(!empty($workTime->clock_out))
                     {{$workTime->sum}}
                     @endif
                 </td>
-                <td class="index-table-data">
-                    <a href="/admin/attendances/{{$workTime->id}}" class="users-table-data-item-detail">
+                <td class="index-table-data-item">
+                    <a href="/admin/attendances/{{$workTime->id}}" class="users-table-data-item detail">
                         詳細
                     </a>
                 </td>

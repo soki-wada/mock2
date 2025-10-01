@@ -12,6 +12,51 @@ use Carbon\Carbon;
 <link rel="stylesheet" href="{{asset('css/index.css')}}">
 @endsection
 
+@section('button')
+    @if($clock_out)
+    <div class="header-button-wrapper long">
+        <a href="/attendance/list" class="header-button-item">
+            今月の出勤一覧
+        </a>
+    </div>
+    <div class="header-button-wrapper">
+        <a href="/stamp_correction_request/list" class="header-button-item">
+            申請一覧
+        </a>
+    </div>
+    <div class="header-button-wrapper">
+        {{-- @authの予定 --}}
+        <form action="/logout" class="header-form-logout" method="post">
+            @csrf
+            <button class="header-button-item" type="submit">ログアウト</button>
+        </form>
+    </div>
+    @else
+    <div class="header-button-wrapper">
+        <a href="/attendance" class="header-button-item">
+            勤怠
+        </a>
+    </div>
+    <div class="header-button-wrapper">
+        <a href="/attendance/list" class="header-button-item">
+            勤怠一覧
+        </a>
+    </div>
+    <div class="header-button-wrapper">
+        <a href="/stamp_correction_request/list" class="header-button-item">
+            申請
+        </a>
+    </div>
+    <div class="header-button-wrapper">
+        {{-- @authの予定 --}}
+        <form action="/logout" class="header-form-logout" method="post">
+            @csrf
+            <button class="header-button-item" type="submit">ログアウト</button>
+        </form>
+    </div>
+    @endif
+@endsection
+
 @section('content')
 <div class="index-content">
     <div class="index-status-wrapper">
@@ -65,8 +110,8 @@ use Carbon\Carbon;
         <form action="/attendance" class="index-form" method="post">
             @csrf
             <input type="hidden" name="break_start" value="{{$time}}">
-            <div class="index-form-button-wrapper">
-                <button class="index-form-button" type="submit">
+            <div class="index-form-button-wrapper break">
+                <button class="index-form-button white" type="submit">
                     休憩入
                 </button>
             </div>
@@ -76,7 +121,7 @@ use Carbon\Carbon;
             @csrf
             <input type="hidden" name="break_end" value="{{$time}}">
             <div class="index-form-button-wrapper">
-                <button class="index-form-button" type="submit">
+                <button class="index-form-button white" type="submit">
                     休憩戻
                 </button>
             </div>
