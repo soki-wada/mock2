@@ -13,6 +13,7 @@
     <div class="login-form-wrapper">
         <form action="/login" class="login-form" method="post" novalidate>
             @csrf
+            <input type="hidden" name="login_as" value="admin">
             <h2 class="login-form-title">
                 管理者ログイン
             </h2>

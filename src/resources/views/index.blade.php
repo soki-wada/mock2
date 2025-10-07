@@ -25,7 +25,6 @@ use Carbon\Carbon;
         </a>
     </div>
     <div class="header-button-wrapper">
-        {{-- @authの予定 --}}
         <form action="/logout" class="header-form-logout" method="post">
             @csrf
             <button class="header-button-item" type="submit">ログアウト</button>
@@ -48,7 +47,6 @@ use Carbon\Carbon;
         </a>
     </div>
     <div class="header-button-wrapper">
-        {{-- @authの予定 --}}
         <form action="/logout" class="header-form-logout" method="post">
             @csrf
             <button class="header-button-item" type="submit">ログアウト</button>

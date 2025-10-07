@@ -15,6 +15,8 @@ use Laravel\Fortify\Fortify;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Responses\LogoutResponse;
+use Laravel\Fortify\Contracts\LogoutResponse as LogoutResponseContract;
 
 
 
@@ -25,8 +27,9 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton(LogoutResponseContract::class, LogoutResponse::class);
     }
+    
 
     /**
      * Bootstrap any application services.
@@ -51,30 +54,30 @@ class FortifyServiceProvider extends ServiceProvider
             return view('auth.register');
         });
         Fortify::loginView(function () {
-            return view('auth.login');
+            return view('auth.login');        
         });
 
         Fortify::authenticateUsing(function (Request $request) {
-            // 入力されたメールアドレスで管理者を検索
-            $admin = User::where('role', 'admin')->where('email', $request->email)->first();
+            $isAdminLogin = $request->input('login_as') === 'admin';
 
-            // パスワードの一致を確認
-            if (Hash::check($request->password, $admin->password)) {
-                return $admin;
+            if ($isAdminLogin) {
+                $user = User::where('role', 'admin')
+                    ->where('email', $request->email)
+                    ->first();
+                if (! $user) {
+                    return null;
+                }
             } else {
-                return null;
+                $user = User::where('email', $request->email)->first();
             }
-        });
 
-        // ログイン後のリダイレクト先の設定
-        Fortify::redirects('login', function () {
-            if (Auth::guard('admin')->check()) {
-                return '/admin/attendances'; // 管理者用ダッシュボードにリダイレクト
-            } else {
-                return '/attendance'; // 一般ユーザー用のホームページにリダイレクト
+            if ($user && Hash::check($request->password, $user->password)) {
+                return $user;
             }
-        });
 
+            return null;
+        });
+        
         RateLimiter::for('login', function (Request $request) {
             $email = (string) $request->email;
 

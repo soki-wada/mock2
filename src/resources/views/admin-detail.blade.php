@@ -29,8 +29,7 @@ use Carbon\Carbon;
     </a>
 </div>
 <div class="header-button-wrapper">
-    {{-- @authの予定 --}}
-    <form action="/logout" class="header-form-logout" method="post">
+    <form action="/admin/logout" class="header-form-logout" method="post">
         @csrf
         <button class="header-button-item" type="submit">ログアウト</button>
     </form>
@@ -44,6 +43,21 @@ use Carbon\Carbon;
         勤怠詳細
     </h2>
     <div class="detail-table-wrapper">
+        @error('clock')
+        <p class="error">
+            {{$message}}
+        </p>
+        @enderror
+        @error('break.')
+        <p class="error">
+            {{$message}}
+        </p>
+        @enderror
+        @error('notes')
+        <p class="error">
+            {{$message}}
+        </p>
+        @enderror
         <form action="/admin/attendances/{{$workTime->id}}" class="detail-form" method="post">
             @csrf
             <table class="detail-table">
