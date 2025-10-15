@@ -10,12 +10,13 @@ use App\Models\User;
 use App\Models\BreakTime;
 use App\Models\Attendance;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\ModificationRequest;
 
 
 class RequestController extends Controller
 {
     //
-    public function modificationRequest(Request $request, $id)
+    public function modificationRequest(ModificationRequest $request, $id)
     {
         $user = Auth::user();
 

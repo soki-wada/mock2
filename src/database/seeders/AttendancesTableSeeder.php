@@ -16,10 +16,10 @@ class AttendancesTableSeeder extends Seeder
     public function run()
     {
         //
-        $startDate = Carbon::create(2025, 6, 1);
-        $endDate = Carbon::create(2025, 6, 30);
+        $startDate = Carbon::now()->startOfMonth();
+        $endDate = Carbon::now()->endOfMonth();
 
-        for ($date = $startDate; $date->lte($endDate); $date->addDay()){
+        for ($date = $startDate->copy(); $date->lte($endDate); $date->addDay()){
             DB::table('attendances')->insert([
                 'user_id'    => 1,
                 'date'       => $date->format('Y-m-d'),

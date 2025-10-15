@@ -45,7 +45,7 @@ class AdminLoginTest extends TestCase
         $response->assertStatus(200);
 
         $response = $this->followingRedirects()->post('/login', [
-            'email' => 'sato@example.com',
+            'email' => 'sato@gmail.com',
             'password' => '',
         ]);
 
@@ -60,7 +60,7 @@ class AdminLoginTest extends TestCase
         $response->assertStatus(200);
 
         $response = $this->followingRedirects()->post('/login', [
-            'email' => 'sato@example.com',
+            'email' => 'test@example.com',
             'password' => '87654321',
         ]);
 

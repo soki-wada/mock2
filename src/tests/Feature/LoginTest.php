@@ -48,7 +48,7 @@ class LoginTest extends TestCase
         $response->assertStatus(200);
 
         $response = $this->followingRedirects()->post('/login', [
-            'email' => 'yamada@example.com',
+            'email' => 'yamada@gmail.com',
             'password' => '',
         ]);
 

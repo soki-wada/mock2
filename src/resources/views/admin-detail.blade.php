@@ -43,16 +43,22 @@ use Carbon\Carbon;
         勤怠詳細
     </h2>
     <div class="detail-table-wrapper">
-        @error('clock')
-        <p class="error">
-            {{$message}}
-        </p>
+        @error('clock_in')
+        <p class="error">{{ $message }}</p>
+        @else
+        @error('clock_out')
+        <p class="error">{{ $message }}</p>
         @enderror
-        @error('break.')
-        <p class="error">
-            {{$message}}
-        </p>
         @enderror
+
+        @if ($errors->hasAny('break_start.*'))
+        <p class="error">休憩時間が不適切な値です</p>
+        @endif
+
+        @if ($errors->hasAny('break_end.*'))
+        <p class="error">休憩時間もしくは退勤時間が不適切な値です</p>
+        @endif
+
         @error('notes')
         <p class="error">
             {{$message}}
