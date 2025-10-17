@@ -9,6 +9,7 @@ use Database\Seeders\BreakTimesTableSeeder;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use App\Models\Attendance;
+use App\Models\BreakTime;
 use Carbon\Carbon;
 
 
@@ -27,6 +28,26 @@ class AttendanceListTest extends TestCase
         $this->seed(UsersTableSeeder::class);
         $this->seed(AttendancesTableSeeder::class);
         $this->seed(BreakTimesTableSeeder::class);
+
+        $userId = 1;
+        $startDate = Carbon::now()->startOfMonth();
+        $endDate = Carbon::now()->endOfMonth();
+
+        for ($date = $startDate->copy(); $date->lte($endDate); $date->addDay()) {
+            $attendance = Attendance::create([
+                'user_id'   => $userId,
+                'date'      => $date->format('Y-m-d'),
+                'clock_in'  => '09:00:00',
+                'clock_out' => '17:00:00',
+            ]);
+
+            // 必要なら休憩データも作る
+            BreakTime::create([
+                'attendance_id' => $attendance->id,
+                'break_start'   => '12:00:00',
+                'break_end'     => '13:00:00',
+            ]);
+        }
     }
 
     public function testShowList()
@@ -36,8 +57,8 @@ class AttendanceListTest extends TestCase
 
         $response = $this->get('/attendance/list');
 
-        $startDate = Carbon::now()->startOfMonth();
-        $endDate   = Carbon::now()->endOfMonth();
+        $startDate = Carbon::now()->subMonth()->startOfMonth();
+        $endDate   = Carbon::now()->subMonth()->endOfMonth();
 
         for ($date = $startDate->copy(); $date->lte($endDate); $date->addDay()) {
             $attendance = Attendance::where('user_id', $user->id)->where('date', $date->format('Y-m-d'))->first();
@@ -111,7 +132,7 @@ class AttendanceListTest extends TestCase
         $this->actingAs($user);
         $response = $this->get('/attendance/list');
 
-        $attendance = Attendance::where('user_id', $user->id)->where('date', 'like', now()->format('Y-m') . '%')->first();
+        $attendance = Attendance::where('user_id', $user->id)->first();
 
         $response = $this->get('/attendance/detail/'. $attendance->id);
         $response->assertStatus(200);

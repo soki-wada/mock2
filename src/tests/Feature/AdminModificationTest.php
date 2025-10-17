@@ -31,7 +31,7 @@ class AdminModificationTest extends TestCase
         $this->actingAs($admin);
 
         $user = User::find(1);
-        $attendance = Attendance::where('user_id', $user->id)->where('date', 'like', now()->format('Y-m') . '%')->with('breakTimes')->first();
+        $attendance = Attendance::where('user_id', $user->id)->with('breakTimes')->first();
 
         $workRequest = WorkRequest::create([
             'user_id' => $user->id,
@@ -60,7 +60,7 @@ class AdminModificationTest extends TestCase
         $this->actingAs($admin);
 
         $user = User::find(1);
-        $attendance = Attendance::where('user_id', $user->id)->where('date', 'like', now()->format('Y-m') . '%')->with('breakTimes')->first();
+        $attendance = Attendance::where('user_id', $user->id)->with('breakTimes')->first();
 
         $workRequest = WorkRequest::create([
             'user_id' => $user->id,
@@ -89,7 +89,7 @@ class AdminModificationTest extends TestCase
         $this->actingAs($admin);
 
         $user = User::find(1);
-        $attendance = Attendance::where('user_id', $user->id)->where('date', 'like', now()->format('Y-m') . '%')->with('breakTimes')->first();
+        $attendance = Attendance::where('user_id', $user->id)->with('breakTimes')->first();
 
         $workRequest = WorkRequest::create([
             'user_id' => $user->id,
@@ -119,7 +119,7 @@ class AdminModificationTest extends TestCase
         $this->actingAs($admin);
 
         $user = User::find(1);
-        $attendance = Attendance::where('user_id', $user->id)->where('date', 'like', now()->format('Y-m') . '%')->with('breakTimes')->first();
+        $attendance = Attendance::where('user_id', $user->id)->with('breakTimes')->first();
 
         $workRequest = WorkRequest::create([
             'user_id' => $user->id,

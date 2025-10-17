@@ -49,6 +49,13 @@ class AdminStaffTest extends TestCase
         $admin = User::where('role', 'admin')->first();
         $this->actingAs($admin);
 
+        Attendance::create([
+            'user_id' => '1',
+            'date' => Carbon::parse(now())->format('Y-m-d'),
+            'clock_in' => '9:00',
+            'clock_out' => '17:00'
+        ]);
+
         $user = User::find(1);
         $response = $this->get('/admin/users/'. $user->id. '/attendances');
         $response->assertStatus(200);

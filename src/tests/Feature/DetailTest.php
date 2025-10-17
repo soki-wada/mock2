@@ -34,7 +34,7 @@ class DetailTest extends TestCase
         $user = User::find(1);
         $this->actingAs($user);
 
-        $attendance = Attendance::where('user_id', $user->id)->where('date', 'like', now()->format('Y-m') . '%')->first();
+        $attendance = Attendance::where('user_id', $user->id)->first();
 
         $response = $this->get('/attendance/detail/' . $attendance->id);
         $response->assertStatus(200);
@@ -46,7 +46,7 @@ class DetailTest extends TestCase
         $user = User::find(1);
         $this->actingAs($user);
 
-        $attendance = Attendance::where('user_id', $user->id)->where('date', 'like', now()->format('Y-m') . '%')->first();
+        $attendance = Attendance::where('user_id', $user->id)->first();
 
         $response = $this->get('/attendance/detail/' . $attendance->id);
         $response->assertStatus(200);
@@ -61,7 +61,7 @@ class DetailTest extends TestCase
         $user = User::find(1);
         $this->actingAs($user);
 
-        $attendance = Attendance::where('user_id', $user->id)->where('date', 'like', now()->format('Y-m') . '%')->first();
+        $attendance = Attendance::where('user_id', $user->id)->first();
 
         $response = $this->get('/attendance/detail/' . $attendance->id);
         $response->assertStatus(200);
@@ -78,7 +78,7 @@ class DetailTest extends TestCase
         $user = User::find(1);
         $this->actingAs($user);
 
-        $attendance = Attendance::where('user_id', $user->id)->where('date', 'like', now()->format('Y-m') . '%')->with('breakTimes')->first();
+        $attendance = Attendance::where('user_id', $user->id)->with('breakTimes')->first();
 
         $response = $this->get('/attendance/detail/' . $attendance->id);
         $response->assertStatus(200);
