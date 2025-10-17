@@ -4,14 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Attendance;
 use App\Models\BreakTime;
-use App\Models\RequestBreak;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use App\Models\User;
-use App\Models\WorkRequest;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Carbon\Carbon;
 use App\Http\Requests\ModificationRequest;
 

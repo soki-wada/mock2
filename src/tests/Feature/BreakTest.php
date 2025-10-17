@@ -2,8 +2,6 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use Database\Seeders\UsersTableSeeder;
 use App\Models\User;
@@ -15,11 +13,6 @@ use Carbon\Carbon;
 
 class BreakTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
     use DatabaseMigrations;
 
     protected function setUp(): void
@@ -192,7 +185,6 @@ class BreakTest extends TestCase
         $hour = floor($diff / 60);
         $minute = $diff % 60;
         $diff = sprintf('%d:%02d', $hour, $minute);
-
 
         $response = $this->get('/attendance/list');
         $response->assertSee($diff);

@@ -2,8 +2,6 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use Database\Seeders\UsersTableSeeder;
 use Database\Seeders\AttendancesTableSeeder;
@@ -11,18 +9,12 @@ use Database\Seeders\BreakTimesTableSeeder;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use App\Models\Attendance;
-use App\Models\BreakTime;
 use App\Models\WorkRequest;
 use Carbon\Carbon;
 
 
 class ModificationTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
     use DatabaseMigrations;
 
     protected function setUp(): void
@@ -236,7 +228,9 @@ class ModificationTest extends TestCase
             'notes' => '電車遅延'
         ]);
 
-        $response = $this->get('/attendance/detail/' . $attendance->id);
+        $workRequest = WorkRequest::where('attendance_id', $attendance->id)->first();
+
+        $response = $this->get('/attendance/detail/' . $workRequest->attendance_id);
         $response->assertStatus(200);
     }
 }

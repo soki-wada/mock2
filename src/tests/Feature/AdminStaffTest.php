@@ -2,8 +2,6 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use Database\Seeders\UsersTableSeeder;
 use Database\Seeders\AttendancesTableSeeder;
@@ -11,8 +9,6 @@ use Database\Seeders\BreakTimesTableSeeder;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use App\Models\Attendance;
-use App\Models\BreakTime;
-use App\Models\WorkRequest;
 use Carbon\Carbon;
 
 
@@ -89,7 +85,6 @@ class AdminStaffTest extends TestCase
         $user = User::find(1);
         $response = $this->get('/admin/users/' . $user->id . '/attendances');
         $response->assertStatus(200);
-
 
         $currentMonth = Carbon::now()->startOfMonth();
         $response = $this->get('/admin/users/' . $user->id . '/attendances?nextMonth=' . $currentMonth->toDateTimeString());

@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\WorkRequest;
 use App\Models\RequestBreak;
 use Carbon\Carbon;
-use App\Models\User;
 use App\Models\BreakTime;
 use App\Models\Attendance;
 use Illuminate\Support\Facades\Auth;
