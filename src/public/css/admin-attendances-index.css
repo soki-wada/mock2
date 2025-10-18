@@ -97,12 +97,12 @@
 .attendance-table-wrapper {
     width: 70%;
     margin: 50px auto 0;
-    background-color: #ffffff;
-    border-radius: 10px;
 }
 
 .attendance-table {
+    border-radius: 10px;
     width: 100%;
+    background-color: #ffffff;
     text-align: center;
 }
 
@@ -140,4 +140,20 @@
     text-decoration: none;
     cursor: pointer;
     margin: 0;
+}
+
+.attendance-export-wrapper{
+    text-align: right;
+}
+
+.attendance-export{
+    margin-top: 30px;
+    width: 170px;
+    height: 50px;
+    border-radius: 5px;
+    background-color: #000000;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 22px;
+    cursor: pointer;
 }

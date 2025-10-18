@@ -165,6 +165,84 @@ class AdminController extends Controller
         return view('admin-attendances-index', compact('month', 'days', 'staff'));
     }
 
+    public function export(Request $request){
+        $user = User::find($request->user_id);
+
+        $month = Carbon::parse($request->date)->format('Y-m');
+
+        $workTimes = Attendance::where('user_id', $user->id)->where('date', 'like', $month . '%')->with('breakTimes')->get();
+
+        foreach ($workTimes as $workTime) {
+            $diff = [];
+            foreach ($workTime->breakTimes as $breakTime) {
+                $diff[] = Carbon::parse($breakTime->break_start)->diffInMinutes(Carbon::parse($breakTime->break_end));
+            }
+
+            $break = array_sum($diff);
+            $hour = floor($break / 60);
+            $minute = $break % 60;
+
+            $workTime->diff = sprintf('%d:%02d', $hour, $minute);
+
+            $workTime->clock_in_formatted = Carbon::parse($workTime->clock_in)->format('H:i');
+
+            $workTime->clock_out_formatted = Carbon::parse($workTime->clock_out)->format('H:i');
+
+            $sumMinutes = Carbon::parse($workTime->clock_in)->diffInMinutes(Carbon::parse($workTime->clock_out)) - $break;
+
+            $hour = floor($sumMinutes / 60);
+            $minute = $sumMinutes % 60;
+
+            $workTime->sum = sprintf('%d:%02d', $hour, $minute);
+        }
+
+        $monthStart = Carbon::parse($request->date)->startOfMonth();
+        $monthEnd   = Carbon::parse($request->date)->endOfMonth();
+
+        $days = [];
+        for ($date = $monthStart; $date->lte($monthEnd); $date->addDay()) {
+            $days[$date->format('Y-m-d')] = null;
+        }
+
+        foreach ($workTimes as $workTime) {
+            $days[$workTime->date] = $workTime;
+        }
+
+        $csvHeader =[
+            '日付', '出勤', '退勤', '休憩', '合計'
+        ];
+        $temps = [];
+        array_push($temps, $csvHeader);
+
+        foreach($days as $date => $workTime){
+            $temp = [
+                Carbon::parse($date)->format('m/d') . '(' . Carbon::parse($date)->isoformat('ddd') . ')',
+                $workTime->clock_in_formatted ?? '',
+                $workTime->clock_out_formatted ?? '',
+                $workTime->diff ?? '',
+                $workTime->sum ?? ''
+            ];
+            array_push($temps, $temp);
+        }
+        $stream = fopen('php://temp', 'r+b');
+        foreach ($temps as $temp) {
+            fputcsv($stream, $temp);
+        }
+        rewind($stream);
+        $csv = str_replace(PHP_EOL, "\r\n", stream_get_contents($stream));
+        $csv = mb_convert_encoding($csv, 'SJIS-win', 'UTF-8');
+        $filename = $user->name ."さんの勤怠" . "(".Carbon::parse($request->date)->format('Y年m月') . ").csv";
+        $headers = array(
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename=' . $filename,
+        );
+        return response()->streamDownload(function () use ($csv) {
+            echo $csv;
+        }, $filename, [
+            'Content-Type' => 'text/csv',
+        ]);
+    }
+
     public function logout(Request $request)
     {
         Auth::logout();

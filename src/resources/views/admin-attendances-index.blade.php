@@ -129,6 +129,16 @@ use Carbon\Carbon;
             </tr>
             @endforeach
         </table>
+        <div class="attendance-export-wrapper">
+            <form action="/export" method="post" class="attendance-export-form">
+                @csrf
+                <input type="hidden" name="user_id" value="{{$staff->id}}">
+                <input type="hidden" name="date" value="{{$month}}">
+                <button class="attendance-export" type="submit">
+                    csv出力
+                </button>
+            </form>
+        </div>
     </div>
 </div>
 @endsection

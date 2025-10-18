@@ -32,6 +32,7 @@ Route::middleware('isAdmin')->group(function(){
         Route::get('admin/attendances/{id}', [AdminController::class, 'showAdminDetail']);
         Route::post('/admin/attendances/{id}', [AdminController::class, 'updateWorkTime']);
         Route::get('/admin/users/{user}/attendances', [AdminController::class, 'showAdminIndex']);
+        Route::post('/export', [AdminController::class, 'export']);
         Route::get('admin/requests', [RequestController::class, 'showAdminRequests']);
         Route::get('/admin/requests/{id}', [RequestController::class, 'showAdminRequestsApproval']);
         Route::post('/admin/requests/{id}', [RequestController::class, 'requestApprove']);
