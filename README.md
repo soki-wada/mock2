@@ -1,4 +1,4 @@
-# mock2-test
+# mock2-test 勤怠管理アプリ
 
 ## 環境構築
 ### Dockerビルド
